@@ -1,0 +1,16 @@
+*   Trying 127.0.0.1...
+* Connected to experiments.dev (127.0.0.1) port 80 (#0)
+> POST /compare/by_khalil/server/compare-remote.php HTTP/1.1
+Host: experiments.dev
+Accept: */*
+Content-Length: 540
+Content-Type: multipart/form-data; boundary=------------------------d29694f2ceb278a2
+
+< HTTP/1.1 200 OK
+< Date: Mon, 15 Aug 2016 14:53:57 GMT
+< Server: Apache/2.2.29 (Unix) mod_wsgi/3.5 Python/2.7.10 PHP/5.6.10 mod_ssl/2.2.29 OpenSSL/0.9.8zh DAV/2 mod_fastcgi/2.4.6 mod_perl/2.0.9 Perl/v5.22.0
+< X-Powered-By: PHP/5.6.10
+< Content-Length: 31
+< Content-Type: text/html; charset=UTF-8
+< 
+* Connection #0 to host experiments.dev left intact
