@@ -15,10 +15,10 @@ And of course Compare Utility itself is open source with a [public repository][d
 
 Clone/Download and extract the [latest pre-built release](https://github.com/zarpio/compare/releases).
 
-1) Update "compare/config.php" file with your requirements.
-2) Upload "compare-remote.php" file and "compare" folder to the remote root location.
-3) Browse the location to compare your files "Your Domain + compare-source.php".
-4) If you followed the instructios properly you will get the compare result.
+1. Update "compare/config.php" file with your requirements.
+2. Upload "compare-remote.php" file and "compare" folder to the remote root location.
+3. Browse the location to compare your files "Your Domain + compare-source.php".
+4. If you followed the instructios properly you will get the compare result.
 
 Note: Try to minimize the scan-list to speed up the things in your life.
 
