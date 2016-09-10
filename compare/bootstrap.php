@@ -6,6 +6,18 @@ require __DIR__ . '/Compare.php';
 require __DIR__ . '/FTPClient.php';
 require __DIR__ . '/Encrypt.php';
 
+/** Validations checking if config is not set */
+if(count(unserialize(SCAN_LIST)) <= 0)
+    throw new Exception("Please update your configuration(compare/config.php)!");
+
+/** Validations checking if config is not set */
+if(!$remoteFile)
+    throw new Exception("Please update your configuration(compare/config.php)!");
+
+/** Validations checking if config is not set */
+if(!$sourceFile)
+    throw new Exception("Please update your configuration(compare/config.php)!");
+
 // Remote Output
 $remoteData = file_get_contents($remoteFile);
 $remoteData = json_decode($remoteData, true);
