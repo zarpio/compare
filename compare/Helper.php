@@ -6,7 +6,7 @@ if (!function_exists('getMimeType')) {
     function getMimeType($file)
     {
         $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
-        $output = finfo_file($fileInfo, $file);
+        $output   = finfo_file($fileInfo, $file);
         finfo_close($fileInfo);
 
         return $output;
@@ -31,12 +31,12 @@ if (!function_exists('dump')) {
         //var_dump( $var );
         print_r($var);
         $output = ob_get_clean();
-        $label = $label ? $label . ' ' : '';
+        $label  = $label ? $label . ' ' : '';
 
         // Location and line-number
-        $line = '';
+        $line      = '';
         $separator = "<p style='color:blue'>" . str_repeat("-", 100) . "</p>" . PHP_EOL;
-        $caller = debug_backtrace();
+        $caller    = debug_backtrace();
         if (count($caller) > 0) {
             $tmp_r = $caller[0];
             $line .= "<p style='color:blue'>Location:</p> => <span style='color:red'>" . $tmp_r['file'] . '</span>';
@@ -81,7 +81,7 @@ if (!function_exists('url')) {
 if (!function_exists('isConnected')) {
     function isConnected()
     {
-        $return = false;
+        $return    = false;
         $connected = @fsockopen('www.google.com', 80);
 
         if ($connected) {
@@ -97,19 +97,20 @@ if (!function_exists('checkPermission')) {
     function checkPermission()
     {
 //        dump(gethostname());
-        switch (gethostname()) {
-            case 'zarpio.local': // office mac
-            case 'zarpio-mac.local': // home mac
-            case 'Khalil': // home ubuntu
-                $output = true;
-                break;
+        // switch (gethostname()) {
+        //     case 'Khalil': // home ubuntu
+        //         $output = true;
+        //         break;
 
-            default:
-                $output = false;
-                break;
-        }
+        //     default:
+        //         $output = false;
+        //         break;
+        // }
 
-        return $output;
+        // return $output;
+
+        /** Disabling this functionality */
+        return true;
     }
 }
 
