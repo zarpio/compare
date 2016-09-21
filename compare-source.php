@@ -411,6 +411,11 @@ include 'compare/bootstrap.php';
     </div><!-- .row #section-matched -->
     <?php //endregion ?>
 
+    <footer class="footer">
+        <br><br><br>
+        <p class="text-muted" style="text-align: center;">Developed By: Khalil - http://www.muhammadkhalil.com</p>
+    </footer>
+
 </div><!-- .container -->
 
 <!-- Jquery -->
