@@ -1,23 +1,26 @@
 <?php
 /******************* FOLLOWING CODE DOES NOT NEED TO BE CHANGED *******************/
 require __DIR__ . '/config.php';
-require __DIR__ . 'compare/contents.php';
+require __DIR__ . 'compare/constants.php';
 require __DIR__ . '/Helper.php';
 require __DIR__ . '/Compare.php';
 require __DIR__ . '/FTPClient.php';
 require __DIR__ . '/Encrypt.php';
 
 /** Validations checking if config is not set */
-if(count(unserialize(SCAN_LIST)) <= 0)
+if (count(unserialize(SCAN_LIST)) <= 0) {
     throw new Exception("Please update your configuration(compare/config.php)!");
+}
 
 /** Validations checking if config is not set */
-if(!$remoteFile)
+if (!$remoteFile) {
     throw new Exception("Please update your configuration(compare/config.php)!");
+}
 
 /** Validations checking if config is not set */
-if(!$sourceFile)
+if (!$sourceFile) {
     throw new Exception("Please update your configuration(compare/config.php)!");
+}
 
 // Remote Output
 $remoteData = file_get_contents($remoteFile);
@@ -42,17 +45,17 @@ $compare->setIgnoreList($ignoreList);
 $compare->setScanList($scanList);
 $sourceData = $compare->scanner();
 
-$sourceFiles = [];
-$files_matched = [];
-$files_different = [];
+$sourceFiles         = [];
+$files_matched       = [];
+$files_different     = [];
 $files_new_at_source = [];
 $files_new_at_remote = [];
-$counter = 0;
+$counter             = 0;
 foreach ($sourceData['files'] as $key => $file) {
-    $sourceFileKey = $key;
+    $sourceFileKey  = $key;
     $sourceFilePath = str_replace('./', '', $file['path']);
     $sourceFileHash = $file['hash'];
-    $sourceFiles[] = $file['path'];
+    $sourceFiles[]  = $file['path'];
 
     if (isset($remoteData['files'][$sourceFileKey])) {
         if ($remoteData['files'][$sourceFileKey]['hash'] == $sourceFileHash) {
@@ -75,25 +78,24 @@ foreach ($sourceData['files'] as $key => $file) {
 $files_new_at_remote = array_diff($remoteFiles, $sourceFiles);
 $files_new_at_remote = str_replace('./', '', $files_new_at_remote);
 
-$final_output['different'] = $files_different;
-$final_output['matched'] = $files_matched;
+$final_output['different']     = $files_different;
+$final_output['matched']       = $files_matched;
 $final_output['new_at_source'] = $files_new_at_source;
 $final_output['new_at_remote'] = $files_new_at_remote;
 // d($final_output);
-
 
 /**
  * Upload file to the remote
  */
 if (isset($_POST['action']) && $_POST['action'] == 'upload') {
     $remoteUrl = $remoteConfig['remoteUrl'];
-    $filePath = $_POST['file'];
+    $filePath  = $_POST['file'];
 
     if (is_array($filePath)) {
         /** Upload multiple files */
         $ch = curl_init();
 
-        $output = [];
+        $output    = [];
         $errorFlag = true;
 
         foreach ($filePath as $path) {
@@ -175,9 +177,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'upload') {
 if (isset($_POST['action']) && $_POST['action'] == 'download') {
 
     //region Download file using Encryption Technique
-    $output = [];
+    $output   = [];
     $filename = $_POST['file'];
-    $data = $_POST['encrypted_data'];
+    $data     = $_POST['encrypted_data'];
 
     /** Initialize Encryption Library */
     $crypt = new Encrypt(ENCRYPTION_KEY);
@@ -193,7 +195,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'download') {
             if (makeDirs(dirname($file))) {
                 /** Write to file */
                 $content = $decryptedData;
-                $fp = fopen($file, "wb");
+                $fp      = fopen($file, "wb");
 
                 if (fwrite($fp, $content) === false) {
                     $output = ['response' => false, 'msg' => "Cannot write to file ($file)"];
@@ -216,7 +218,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'download') {
         if (makeDirs(dirname($filename))) {
             /** Write to file */
             $content = $decryptedData;
-            $fp = fopen($filename, "wb");
+            $fp      = fopen($filename, "wb");
 
             if (fwrite($fp, $content) === false) {
                 $output = ['response' => false, 'msg' => "Cannot write to file ($filename)"];
@@ -235,35 +237,34 @@ if (isset($_POST['action']) && $_POST['action'] == 'download') {
     exit();
     //endregion
 
-
     //region Download file using FTP
     // *** Create the FTP object
-//    $ftpObj = new FTPClient();
-//    // *** Connect
-//    if ($ftpObj -> connect(FTP_HOST, FTP_USER, FTP_PASS, PASSIVE_MODE)) {
-//        // *** Then add FTP code here
-//
-//        $filePath = $_POST['file'];
-//        $path = dirname($filePath);
-//        $fileName = basename($filePath);
-//        if (!file_exists($path)) {
-//            mkdir($path, 0755, true);
-//        }
-//
-//        // *** Change to folder
-//        $ftpObj->changeDir($path);
-//
-//        $fileFrom = $fileName; # The location on the remote
-//        $fileTo = $filePath; # Source dir to save to
-//
-//        // *** Download file
-//        $ftpObj->downloadFile($fileFrom, $fileTo);
-//
-//        echo json_encode(['response' => true, 'msg' => 'File Downloaded']);
-//    } else {
-//        echo json_encode(['response' => false, 'msg' => $ftpObj -> getMessages()]);
-//    }
-//    exit();
+    //    $ftpObj = new FTPClient();
+    //    // *** Connect
+    //    if ($ftpObj -> connect(FTP_HOST, FTP_USER, FTP_PASS, PASSIVE_MODE)) {
+    //        // *** Then add FTP code here
+    //
+    //        $filePath = $_POST['file'];
+    //        $path = dirname($filePath);
+    //        $fileName = basename($filePath);
+    //        if (!file_exists($path)) {
+    //            mkdir($path, 0755, true);
+    //        }
+    //
+    //        // *** Change to folder
+    //        $ftpObj->changeDir($path);
+    //
+    //        $fileFrom = $fileName; # The location on the remote
+    //        $fileTo = $filePath; # Source dir to save to
+    //
+    //        // *** Download file
+    //        $ftpObj->downloadFile($fileFrom, $fileTo);
+    //
+    //        echo json_encode(['response' => true, 'msg' => 'File Downloaded']);
+    //    } else {
+    //        echo json_encode(['response' => false, 'msg' => $ftpObj -> getMessages()]);
+    //    }
+    //    exit();
     //endregion
 }
 
@@ -273,8 +274,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete-source') {
     $output = [];
 
     if (is_array($filesPath)) {
-        $isUnlinked = false;
-        $isExist = false;
+        $isUnlinked     = false;
+        $isExist        = false;
         $somethingWrong = false;
         foreach ($filesPath as $file) {
             if (file_exists($file)) {
