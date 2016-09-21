@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *');
 
 /******************* FOLLOWING CODE DOES NOT NEED TO BE CHANGED *******************/
 require 'compare/config.php';
-require 'compare/contents.php';
+require 'compare/constants.php';
 require 'compare/Helper.php';
 require 'compare/Compare.php';
 require 'compare/Encrypt.php';

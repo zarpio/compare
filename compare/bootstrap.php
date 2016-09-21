@@ -1,7 +1,7 @@
 <?php
 /******************* FOLLOWING CODE DOES NOT NEED TO BE CHANGED *******************/
 require __DIR__ . '/config.php';
-require __DIR__ . 'compare/constants.php';
+require __DIR__ . '/constants.php';
 require __DIR__ . '/Helper.php';
 require __DIR__ . '/Compare.php';
 require __DIR__ . '/FTPClient.php';

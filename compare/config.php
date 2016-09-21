@@ -52,6 +52,8 @@ define('IGNORE_EVERYWHERE_LIST', serialize([
     '..',
     'cgi-bin',
     '.DS_Store',
+    '.git',
+    'README.md',
 ]));
 
 /**
